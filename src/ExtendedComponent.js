@@ -52,6 +52,8 @@ module.exports = React.createClass({
     var areKeysPressedTogether = simultaneous && isEmpty(difference(keys, newBuffer));
     var areKeysPressedSequently = !simultaneous && isEqual(keys, newBuffer);
 
+    console.log('...isKeySetEmpty: ', isKeySetEmpty);
+
     if (!isKeySetEmpty) {
       if ((areKeysPressedTogether || areKeysPressedSequently)
           && isFunction(onKeysCoincide)) {
