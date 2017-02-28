@@ -1,0 +1,6 @@
+exports[`<Component /> Should render 1`] = `
+<Unknown
+  keys={Array []}
+  onKeysCoincide={[Function]}
+  simultaneous={false} />
+`;

@@ -1,0 +1,64 @@
+{
+  "name": "react-easter",
+  "version": "1.0.0",
+  "description": "Easilly add easter eggs to your React app",
+  "main": "src/Component.js",
+  "scripts": {
+    "test": "NODE_ENV=test jest -u --no-cache --config .jestrc",
+    "test:coverage": "NODE_ENV=test jest --coverage --no-cache --config .jestrc",
+    "lint": "eslint --config .eslintrc --ext .js .",
+    "coveralls": "cat ./coverage/lcov.info | coveralls",
+    "codeclimate": "cat ./coverage/lcov.info | codeclimate-test-reporter",
+    "test:report": "npm run coveralls && npm run codeclimate",
+    "validate": "npm run lint && npm run test:coverage",
+    "prepush": "npm run validate"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devlato/react-easter.git"
+  },
+  "keywords": [
+    "react",
+    "easter",
+    "eggs",
+    "easter egg",
+    "konami",
+    "cheat code"
+  ],
+  "author": "devlato <npm@devlato.com> (http://devlato.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/devlato/react-easter/issues"
+  },
+  "homepage": "https://github.com/devlato/react-easter#readme",
+  "files": [
+    "package.json",
+    "README.md",
+    ".gitignore",
+    ".editorconfig",
+    "src"
+  ],
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "codeclimate-test-reporter": "0.4.0",
+    "coveralls": "2.11.15",
+    "enzyme": "^2.7.1",
+    "eslint": "3.14.1",
+    "eslint-config-airbnb-base": "11.0.1",
+    "eslint-plugin-import": "2.2.0",
+    "husky": "0.13.1",
+    "jest": "18.1.0",
+    "react-addons-test-utils": "^15.4.2",
+    "sinon": "^1.17.7"
+  },
+  "dependencies": {
+    "bluebird": "3.4.7",
+    "lodash": "^4.17.4",
+    "react": "15.4.2",
+    "react-dom": "^15.4.2"
+  },
+  "engines": {
+    "node": ">= 4",
+    "npm": ">= 2"
+  }
+}
