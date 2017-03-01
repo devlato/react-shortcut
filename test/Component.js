@@ -1,22 +1,20 @@
 var React = require('react');
 var enzyme = require('enzyme');
-var chai = require('chai');
 var Promise = require('bluebird');
 
 var Component = require('../src/Component');
 
 
-var shallow = enzyme.shallow;
-var assert = chai.assert;
+var mount = enzyme.mount;
 
 
-function Page(component) {
-  this.component = function() {
-    return component;
+function Page(wrapper) {
+  this.wrapper = function() {
+    return wrapper;
   };
 
   this.child = function() {
-    return component.find('.test-overlay');
+    return wrapper.find('.test-overlay');
   };
 };
 
@@ -32,24 +30,41 @@ function createComponent(props, children) {
   var componentProps = props || {};
   var componentChildren = children || null;
 
-  var component = shallow(
-      React.createElement(Component, componentProps, componentChildren));
-  var page = new Page(component);
+  var component = React.createElement(Component, componentProps, componentChildren);
+  var wrapper = mount(component);
+  var page = new Page(wrapper);
 
   return {
     page: page,
-    component: component
+    wrapper: wrapper
   };
 }
 
 
 describe('<Component />', function() {
+  beforeEach(function() {
+    // jest.spyOn(Component.prototype, 'setState');
+    jest.spyOn(Component.prototype, 'componentDidMount');
+    // jest.spyOn(Component.prototype, 'componentWillUnmount');
+  });
+
+
+  afterEach(function() {
+    // Component.prototype.setState.mockReset();
+    // Component.prototype.setState.mockRestore();
+
+    Component.prototype.componentDidMount.mockReset();
+    Component.prototype.componentDidMount.mockRestore();
+
+    // Component.prototype.componentWillUnmount.mockReset();
+    // Component.prototype.componentWillUnmount.mockRestore();
+  });
+
+
   it('Should render', function() {
-    var created = createComponent();
+    createComponent();
 
-    var component = created.component;
-
-    expect(component.get(0)).toMatchSnapshot();
+    expect(Component.prototype.componentDidMount).toHaveBeenCalledTimes(1);
   });
 
 
@@ -59,15 +74,23 @@ describe('<Component />', function() {
       keys: ['t', 'e', 's', 't']
     }, child);
 
-    var component = created.component;
+    var wrapper = created.wrapper;
     var page = created.page;
 
-    page.component().simulate('keydown', {key: 't'});
-    page.component().simulate('keydown', {key: 'e'});
-    page.component().simulate('keydown', {key: 's'});
-    page.component().simulate('keydown', {key: 't'});
+    return new Promise(function(resolve) {
+      expect(page.wrapper().contains(child)).toEqual(false);
 
-    assert.lengthOf(page.child(), 1, 'Child is rendered');
+      document.dispatchEvent(new KeyboardEvent('keydown', {'key': 't'}));
+      document.dispatchEvent(new KeyboardEvent('keydown', {'key': 'e'}));
+      document.dispatchEvent(new KeyboardEvent('keydown', {'key': 's'}));
+      document.dispatchEvent(new KeyboardEvent('keydown', {'key': 't'}));
+
+      setTimeout(function() {
+        resolve();
+      }, 500);
+    }).then(function() {
+      expect(page.wrapper().contains(child)).toEqual(true);
+    });
   });
 
 
@@ -78,22 +101,24 @@ describe('<Component />', function() {
       timeout: 300
     }, child);
 
-    var component = created.component;
+    var wrapper = created.wrapper;
     var page = created.page;
 
-    page.component().simulate('keydown', {key: 't'});
-    page.component().simulate('keydown', {key: 'e'});
-    page.component().simulate('keydown', {key: 's'});
-    page.component().simulate('keydown', {key: 't'});
-
-    assert.lengthOf(page.child(), 1, 'Child is rendered');
-
     return new Promise(function(resolve) {
+      expect(page.wrapper().contains(child)).toEqual(false);
+
+      document.dispatchEvent(new KeyboardEvent('keydown', {'key': 't'}));
+      document.dispatchEvent(new KeyboardEvent('keydown', {'key': 'e'}));
+      document.dispatchEvent(new KeyboardEvent('keydown', {'key': 's'}));
+      document.dispatchEvent(new KeyboardEvent('keydown', {'key': 't'}));
+
+      expect(page.wrapper().contains(child)).toEqual(true);
+
       setTimeout(function() {
         resolve();
-      }, 500);
+      }, 1000);
     }).then(function() {
-      assert.lengthOf(page.child(), 0, 'Child dissapeared');
+      expect(page.wrapper().contains(child)).toEqual(false);
     });
   });
 });

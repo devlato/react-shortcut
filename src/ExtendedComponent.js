@@ -13,24 +13,24 @@ module.exports = React.createClass({
     onKeysCoincide: React.PropTypes.func
   },
 
-  getInitialState: function() {
+  getInitialState: function initialState() {
     var props = this.props || {};
 
     return {
       buffer: [],
-      maxLength: props.keys && props.keys.length || 0
+      maxLength: (props.keys && props.keys.length) || 0
     };
   },
 
-  componentDidMount: function() {
-    document.addEventListener('keydown', this._onKeyPress);
+  componentDidMount: function didMount() {
+    document.addEventListener('keydown', this.onKeyPress);
   },
 
-  componentWillUnmount: function() {
-    document.removeEventListener('keydown', this._onKeyPress);
+  componentWillUnmount: function willUnmount() {
+    document.removeEventListener('keydown', this.onKeyPress);
   },
 
-  _onKeyPress: function(e) {
+  onKeyPress: function keyPress(e) {
     var props = this.props || {};
     var state = this.state || {};
 
@@ -41,18 +41,24 @@ module.exports = React.createClass({
     var buffer = state.buffer || [];
     var maxLength = state.maxLength || 0;
 
-    var key = e && e.key && e.key.toLowerCase() || null;
-    var newBuffer = key
-        ? buffer.length >= maxLength
-            ? buffer.slice(1).concat(key)
-            : buffer.concat(key)
-        : buffer;
+    var key = (e && e.key && e.key.toLowerCase()) || null;
+    var newBuffer = buffer;
 
-    var isKeySetEmpty = !maxLength || (maxLength === 0);
-    var areKeysPressedTogether = simultaneous && isEmpty(difference(keys, newBuffer));
-    var areKeysPressedSequently = !simultaneous && isEqual(keys, newBuffer);
+    var isKeySetEmpty;
+    var areKeysPressedTogether;
+    var areKeysPressedSequently;
 
-    console.log('...isKeySetEmpty: ', isKeySetEmpty);
+    if (key) {
+      if (buffer.length >= maxLength) {
+        newBuffer = buffer.slice(1).concat(key);
+      } else {
+        newBuffer = buffer.concat(key);
+      }
+    }
+
+    isKeySetEmpty = !maxLength || (maxLength === 0);
+    areKeysPressedTogether = simultaneous && isEmpty(difference(keys, newBuffer));
+    areKeysPressedSequently = !simultaneous && isEqual(keys, newBuffer);
 
     if (!isKeySetEmpty) {
       if ((areKeysPressedTogether || areKeysPressedSequently)
@@ -69,11 +75,11 @@ module.exports = React.createClass({
     }
   },
 
-  render: function() {
+  render: function renderComponent() {
     return null;
   },
 
-  getDefaultProps: function() {
+  getDefaultProps: function defaultProps() {
     return {
       keys: [],
       simultaneous: false

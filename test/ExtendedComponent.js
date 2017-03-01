@@ -1,7 +1,6 @@
 var React = require('react');
 var enzyme = require('enzyme');
 var chai = require('chai');
-var sinon = require('sinon');
 var Promise = require('bluebird');
 
 var Component = require('../src/ExtendedComponent');
@@ -22,8 +21,9 @@ function createComponent(props, children) {
   var componentProps = props || {};
   var componentChildren = children || null;
 
-  var wrapper = mount(
-      React.createElement(Component, componentProps, componentChildren));
+  var component = React.createElement(Component, componentProps, componentChildren);
+
+  var wrapper = mount(component);
   var page = new Page(wrapper);
 
   return {
@@ -35,23 +35,28 @@ function createComponent(props, children) {
 
 describe('<ExtendedComponent />', function() {
   beforeEach(function() {
-    sinon.spy(Component.prototype, 'setState');
-    sinon.spy(Component.prototype, 'componentDidMount');
-    sinon.spy(Component.prototype, 'componentWillUnmount');
+    jest.spyOn(Component.prototype, 'setState');
+    jest.spyOn(Component.prototype, 'componentDidMount');
+    jest.spyOn(Component.prototype, 'componentWillUnmount');
   });
 
 
   afterEach(function() {
-    Component.prototype.setState.restore()
-    Component.prototype.componentDidMount.restore();
-    Component.prototype.componentWillUnmount.restore();
+    Component.prototype.setState.mockReset();
+    Component.prototype.setState.mockRestore();
+
+    Component.prototype.componentDidMount.mockReset();
+    Component.prototype.componentDidMount.mockRestore();
+
+    Component.prototype.componentWillUnmount.mockReset();
+    Component.prototype.componentWillUnmount.mockRestore();
   });
 
 
   it('Calls componentDidMount', function() {
     createComponent();
 
-    expect(Component.prototype.componentDidMount.calledOnce).toEqual(true);
+    expect(Component.prototype.componentDidMount).toHaveBeenCalledTimes(1);
   });
 
 
@@ -76,7 +81,7 @@ describe('<ExtendedComponent />', function() {
       document.dispatchEvent(new KeyboardEvent('keydown', {'key': 'c'}));
       document.dispatchEvent(new KeyboardEvent('keydown', {'key': 'k'}));
     }).then(function() {
-      expect(onKeysCoincideMock).toBeCalled();
+      expect(onKeysCoincideMock).toHaveBeenCalled();
     });
   });
 
@@ -90,20 +95,28 @@ describe('<ExtendedComponent />', function() {
     var page = created.page;
 
     document.dispatchEvent(new KeyboardEvent('keydown'), {});
-    expect(Component.prototype.setState.calledWith({buffer: []})).toEqual(true);
+    expect(Component.prototype.setState).toHaveBeenCalledWith({
+      buffer: []
+    });
   });
 
 
-  it('Should not react if empty buffer passed', function() {
-    var created = createComponent({
-      keys: []
+  it('Should not react if empty keys passed', function() {
+    return new Promise(function(resolve) {
+      var created = createComponent({
+        keys: []
+      });
+
+      var wrapper = created.wrapper;
+      var page = created.page;
+
+      document.dispatchEvent(new KeyboardEvent('keydown'), {key: 'a'});
+      setTimeout(function() {
+        resolve();
+      }, 500);
+    }).then(function() {
+      expect(Component.prototype.setState).toHaveBeenCalled();
     });
-
-    var wrapper = created.wrapper;
-    var page = created.page;
-
-    document.dispatchEvent(new KeyboardEvent('keydown'), {key: 'a'});
-    expect(Component.prototype.setState.callCount).toEqual(0);
   });
 
 
@@ -119,7 +132,7 @@ describe('<ExtendedComponent />', function() {
 
     wrapper.unmount();
 
-    expect(Component.prototype.componentWillUnmount.calledOnce).toEqual(true);
-    expect(document.removeEventListener).toBeCalled();
+    expect(Component.prototype.componentWillUnmount).toHaveBeenCalledTimes(1);
+    expect(document.removeEventListener).toHaveBeenCalled();
   });
 });

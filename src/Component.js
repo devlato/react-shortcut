@@ -14,45 +14,42 @@ module.exports = React.createClass({
     ])
   },
 
-  getInitialState: function() {
+  getInitialState: function initialState() {
     return {
       timer: null
     };
   },
 
-  render: function() {
+  componentDidMount: function didMount() {},
+
+  render: function renderComponent() {
     var props = this.props || {};
     var state = this.state || {};
 
     var children = props.children || null;
     var timer = state.timer || null;
 
-    if (timer) {
+    if (timer !== null) {
       return children;
     }
 
     return React.createElement(ExtendedComponent, {
       keys: props.keys,
       simultaneous: props.simultaneous,
-      onKeysCoincide: this._onKeysCoincide
-    }, children);
+      onKeysCoincide: this.onKeysCoincide
+    }, null);
   },
 
-  _onKeysCoincide: function() {
+  onKeysCoincide: function keysCoincide() {
     var props = this.props || {};
-
     var timeout = props.timeout || null;
-
-    console.log('setting timer: ', timeout);
 
     if (timeout) {
       this.setState({
-        timer: setTimeout((function() {
+        timer: setTimeout((function resolveTimeout() {
           var state = this.state || {};
 
           clearTimeout(state.timer);
-
-          console.log('clearing timer: ', state.timer);
 
           this.setState({
             timer: null
@@ -66,7 +63,7 @@ module.exports = React.createClass({
     }
   },
 
-  getDefaultProps: function() {
+  getDefaultProps: function defaultProps() {
     return {
       keys: [],
       simultaneous: false,
