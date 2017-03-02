@@ -1,73 +1,88 @@
 var React = require('react');
 
-var ExtendedComponent = require('./ExtendedComponent');
+var isEmpty = require('lodash/isEmpty');
+var difference = require('lodash/difference');
+var isEqual = require('lodash/isEqual');
+var isFunction = require('lodash/isFunction');
 
 
 module.exports = React.createClass({
   propTypes: {
     keys: React.PropTypes.array,
     simultaneous: React.PropTypes.bool,
-    timeout: React.PropTypes.number,
-    children: React.PropTypes.oneOfType([
-      React.PropTypes.array,
-      React.PropTypes.element
-    ])
+    onKeysCoincide: React.PropTypes.func
   },
 
   getInitialState: function initialState() {
+    var props = this.props || {};
+
     return {
-      timer: null
+      buffer: [],
+      maxLength: (props.keys && props.keys.length) || 0
     };
   },
 
-  componentDidMount: function didMount() {},
+  componentDidMount: function didMount() {
+    document.addEventListener('keydown', this.onKeyPress);
+  },
 
-  render: function renderComponent() {
+  componentWillUnmount: function willUnmount() {
+    document.removeEventListener('keydown', this.onKeyPress);
+  },
+
+  onKeyPress: function keyPress(e) {
     var props = this.props || {};
     var state = this.state || {};
 
-    var children = props.children || null;
-    var timer = state.timer || null;
+    var keys = props.keys;
+    var onKeysCoincide = props.onKeysCoincide;
+    var simultaneous = props.simultaneous;
 
-    if (timer !== null) {
-      return children;
+    var buffer = state.buffer || [];
+    var maxLength = state.maxLength || 0;
+
+    var key = (e && e.key && e.key.toLowerCase()) || null;
+    var newBuffer = buffer;
+
+    var isKeySetEmpty;
+    var areKeysPressedTogether;
+    var areKeysPressedSequently;
+
+    if (key) {
+      if (buffer.length >= maxLength) {
+        newBuffer = buffer.slice(1).concat(key);
+      } else {
+        newBuffer = buffer.concat(key);
+      }
     }
 
-    return React.createElement(ExtendedComponent, {
-      keys: props.keys,
-      simultaneous: props.simultaneous,
-      onKeysCoincide: this.onKeysCoincide
-    }, null);
+    isKeySetEmpty = !maxLength || (maxLength === 0);
+    areKeysPressedTogether = simultaneous && isEmpty(difference(keys, newBuffer));
+    areKeysPressedSequently = !simultaneous && isEqual(keys, newBuffer);
+
+    if (!isKeySetEmpty) {
+      if ((areKeysPressedTogether || areKeysPressedSequently)
+          && isFunction(onKeysCoincide)) {
+        onKeysCoincide(newBuffer);
+        this.setState({
+          buffer: []
+        });
+      } else {
+        this.setState({
+          buffer: newBuffer
+        });
+      }
+    }
   },
 
-  onKeysCoincide: function keysCoincide() {
-    var props = this.props || {};
-    var timeout = props.timeout || null;
-
-    if (timeout) {
-      this.setState({
-        timer: setTimeout((function resolveTimeout() {
-          var state = this.state || {};
-
-          clearTimeout(state.timer);
-
-          this.setState({
-            timer: null
-          });
-        }).bind(this), timeout)
-      });
-    } else {
-      this.setState({
-        timer: Number.POSITIVE_INFINITY
-      });
-    }
+  render: function renderComponent() {
+    return null;
   },
 
   getDefaultProps: function defaultProps() {
     return {
       keys: [],
-      simultaneous: false,
-      timeout: null
+      simultaneous: false
     };
   }
 });

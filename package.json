@@ -1,7 +1,7 @@
 {
-  "name": "react-easter",
+  "name": "react-shortcut",
   "version": "1.0.0",
-  "description": "Easilly add easter eggs to your React app",
+  "description": "Easilly add global hotkeys to your React app",
   "main": "src/Component.js",
   "scripts": {
     "test": "NODE_ENV=test jest -u --no-cache --config .jestrc",
@@ -15,22 +15,24 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/devlato/react-easter.git"
+    "url": "git+https://github.com/devlato/react-hotkeys.git"
   },
   "keywords": [
     "react",
-    "easter",
-    "eggs",
-    "easter egg",
-    "konami",
-    "cheat code"
+    "hotkeys",
+    "hotkey",
+    "shortcut",
+    "keyboard",
+    "keydown",
+    "listener",
+    "keypress"
   ],
   "author": "devlato <npm@devlato.com> (http://devlato.com/)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/devlato/react-easter/issues"
+    "url": "https://github.com/devlato/react-hotkeys/issues"
   },
-  "homepage": "https://github.com/devlato/react-easter#readme",
+  "homepage": "https://github.com/devlato/react-hotkeys#readme",
   "files": [
     "package.json",
     "README.md",

@@ -1,29 +1,20 @@
 var React = require('react');
 var enzyme = require('enzyme');
+var chai = require('chai');
 var Promise = require('bluebird');
 
 var Component = require('../src/Component');
 
 
 var mount = enzyme.mount;
+var assert = chai.assert;
 
 
 function Page(wrapper) {
   this.wrapper = function() {
     return wrapper;
   };
-
-  this.child = function() {
-    return wrapper.find('.test-overlay');
-  };
 };
-
-
-function createChild() {
-  return React.createElement('div', {
-    className: 'test-overlay'
-  }, null);
-}
 
 
 function createComponent(props, children) {
@@ -31,6 +22,7 @@ function createComponent(props, children) {
   var componentChildren = children || null;
 
   var component = React.createElement(Component, componentProps, componentChildren);
+
   var wrapper = mount(component);
   var page = new Page(wrapper);
 
@@ -41,84 +33,106 @@ function createComponent(props, children) {
 }
 
 
-describe('<Component />', function() {
+describe('<HotKey />', function() {
   beforeEach(function() {
-    // jest.spyOn(Component.prototype, 'setState');
+    jest.spyOn(Component.prototype, 'setState');
     jest.spyOn(Component.prototype, 'componentDidMount');
-    // jest.spyOn(Component.prototype, 'componentWillUnmount');
+    jest.spyOn(Component.prototype, 'componentWillUnmount');
   });
 
 
   afterEach(function() {
-    // Component.prototype.setState.mockReset();
-    // Component.prototype.setState.mockRestore();
+    Component.prototype.setState.mockReset();
+    Component.prototype.setState.mockRestore();
 
     Component.prototype.componentDidMount.mockReset();
     Component.prototype.componentDidMount.mockRestore();
 
-    // Component.prototype.componentWillUnmount.mockReset();
-    // Component.prototype.componentWillUnmount.mockRestore();
+    Component.prototype.componentWillUnmount.mockReset();
+    Component.prototype.componentWillUnmount.mockRestore();
   });
 
 
-  it('Should render', function() {
+  it('Calls componentDidMount', function() {
     createComponent();
 
     expect(Component.prototype.componentDidMount).toHaveBeenCalledTimes(1);
   });
 
 
-  it('Should handle keys sequently without timeout', function() {
-    var child = createChild();
-    var created = createComponent({
-      keys: ['t', 'e', 's', 't']
-    }, child);
-
-    var wrapper = created.wrapper;
-    var page = created.page;
+  it('Should handle keys sequently', function() {
+    var onKeysCoincideMock = jest.fn();
 
     return new Promise(function(resolve) {
-      expect(page.wrapper().contains(child)).toEqual(false);
-
-      document.dispatchEvent(new KeyboardEvent('keydown', {'key': 't'}));
-      document.dispatchEvent(new KeyboardEvent('keydown', {'key': 'e'}));
-      document.dispatchEvent(new KeyboardEvent('keydown', {'key': 's'}));
-      document.dispatchEvent(new KeyboardEvent('keydown', {'key': 't'}));
-
-      setTimeout(function() {
+      var onKeysCoincide = function() {
+        onKeysCoincideMock();
         resolve();
-      }, 500);
+      };
+      var created = createComponent({
+        keys: ['m', 'o', 'c', 'k'],
+        onKeysCoincide: onKeysCoincide
+      });
+
+      var wrapper = created.wrapper;
+      var page = created.page;
+
+      document.dispatchEvent(new KeyboardEvent('keydown', {'key': 'm'}));
+      document.dispatchEvent(new KeyboardEvent('keydown', {'key': 'o'}));
+      document.dispatchEvent(new KeyboardEvent('keydown', {'key': 'c'}));
+      document.dispatchEvent(new KeyboardEvent('keydown', {'key': 'k'}));
     }).then(function() {
-      expect(page.wrapper().contains(child)).toEqual(true);
+      expect(onKeysCoincideMock).toHaveBeenCalled();
     });
   });
 
 
-  it('Should handle keys sequently with timeout', function() {
-    var child = createChild();
+  it('Should not react to events without keys', function() {
     var created = createComponent({
-      keys: ['t', 'e', 's', 't'],
-      timeout: 300
-    }, child);
+      keys: ['c', 'r', 'a', 'p']
+    });
 
     var wrapper = created.wrapper;
     var page = created.page;
 
+    document.dispatchEvent(new KeyboardEvent('keydown'), {});
+    expect(Component.prototype.setState).toHaveBeenCalledWith({
+      buffer: []
+    });
+  });
+
+
+  it('Should not react if empty keys passed', function() {
     return new Promise(function(resolve) {
-      expect(page.wrapper().contains(child)).toEqual(false);
+      var created = createComponent({
+        keys: []
+      });
 
-      document.dispatchEvent(new KeyboardEvent('keydown', {'key': 't'}));
-      document.dispatchEvent(new KeyboardEvent('keydown', {'key': 'e'}));
-      document.dispatchEvent(new KeyboardEvent('keydown', {'key': 's'}));
-      document.dispatchEvent(new KeyboardEvent('keydown', {'key': 't'}));
+      var wrapper = created.wrapper;
+      var page = created.page;
 
-      expect(page.wrapper().contains(child)).toEqual(true);
-
+      document.dispatchEvent(new KeyboardEvent('keydown'), {key: 'a'});
       setTimeout(function() {
         resolve();
-      }, 1000);
+      }, 500);
     }).then(function() {
-      expect(page.wrapper().contains(child)).toEqual(false);
+      expect(Component.prototype.setState).toHaveBeenCalled();
     });
+  });
+
+
+  it('Should remove listener on unmount', function() {
+    document.removeEventListener = jest.fn();
+
+    var created = createComponent({
+      keys: ['m', 'o', 'c', 'k']
+    });
+
+    var wrapper = created.wrapper;
+    var page = created.page;
+
+    wrapper.unmount();
+
+    expect(Component.prototype.componentWillUnmount).toHaveBeenCalledTimes(1);
+    expect(document.removeEventListener).toHaveBeenCalled();
   });
 });
