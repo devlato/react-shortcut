@@ -45,6 +45,9 @@ render() {
 }
 ```
 
+You can add `react-shortcut` anywhere in your component hierarchy, because it adds a global
+keyboard events listener and doesn't stops any event bubbling.
+
 For example:
 
 ```jsx
