@@ -1,6 +1,6 @@
 # react-shortcut
 
-Easilly add global-level hotkeys/shortcuts to your React app
+Easily add global hotkeys/shortcuts to your React app
 
 
 [![Build Status](https://travis-ci.org/devlato/react-hotkeys.svg?branch=master)](https://travis-ci.org/devlato/react-hotkeys)

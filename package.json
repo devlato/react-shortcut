@@ -1,7 +1,7 @@
 {
   "name": "react-shortcut",
   "version": "1.0.0",
-  "description": "Easilly add global hotkeys to your React app",
+  "description": "Easily add global hotkeys to your React app",
   "main": "src/Component.js",
   "scripts": {
     "test": "NODE_ENV=test jest -u --no-cache --config .jestrc",
