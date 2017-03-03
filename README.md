@@ -110,6 +110,11 @@ For example, to have a `Shift+!` hotkey, you should pass `keys={["shift", "1"]}`
 because "Shift" and "1" pressed together produce "!".
 
 
+## Examples of react-shortcut usage
+
+* [react-easter](https://www.npmjs.com/package/react-easter) – Easily add Easter eggs to your React app
+
+
 ## Test coverage
 
 Library has ~100% test coverage:

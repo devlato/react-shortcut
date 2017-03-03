@@ -1,6 +1,6 @@
 {
   "name": "react-shortcut",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Easily add global hotkeys to your React app",
   "main": "src/Component.js",
   "scripts": {
