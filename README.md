@@ -39,7 +39,7 @@ render() {
     <HotKey
         keys={/* Array of hotkeys */}
         simultaneous={/* Add this prop if keys should be pressed all together */}
-        onKeysCoincide={/* Callback when keys are pressed */}
+        onKeysCoincide={/* Callback when target key combination is pressed */}
     />
   );
 }
