@@ -82,8 +82,7 @@ export default class AnyYourComponent extends React.Component {
     );
   }
 
-
-  onFileOpen() {
+  onFileOpen(keys, events) {
     const {showOpenFileDialog} = this.props;
 
     showOpenFileDialog();
@@ -127,22 +126,23 @@ $ npm run test:coverage
 
  PASS  test/Component.js
   <HotKey />
-    ✓ Calls componentDidMount (19ms)
-    ✓ Should handle keys sequently (11ms)
-    ✓ Should not react to events without keys (3ms)
-    ✓ Should not react if empty keys passed (515ms)
-    ✓ Should remove listener on unmount (4ms)
+    ✓ Calls componentDidMount (16ms)
+    ✓ Should handle keys sequently (10ms)
+    ✓ Should not react to events without keys (5ms)
+    ✓ Should not react if empty keys passed (506ms)
+    ✓ Should pass keys and events buffers (5ms)
+    ✓ Should remove listener on unmount (6ms)
 
 --------------|----------|----------|----------|----------|----------------|
 File          |  % Stmts | % Branch |  % Funcs |  % Lines |Uncovered Lines |
 --------------|----------|----------|----------|----------|----------------|
-All files     |      100 |    85.29 |      100 |      100 |                |
- Component.js |      100 |    85.29 |      100 |      100 |                |
+All files     |      100 |    83.33 |      100 |      100 |                |
+ Component.js |      100 |    83.33 |      100 |      100 |... 35,41,42,66 |
 --------------|----------|----------|----------|----------|----------------|
 Test Suites: 1 passed, 1 total
-Tests:       5 passed, 5 total
+Tests:       6 passed, 6 total
 Snapshots:   0 total
-Time:        2.032s
+Time:        2.628s
 Ran all test suites.
 
 ```
