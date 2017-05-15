@@ -56,7 +56,6 @@ module.exports = React.createClass({
       if (buffer.length >= maxLength) {
         newBuffer = buffer.slice(1).concat(key);
         newEventsBuffer = eventsBuffer.slice(1).concat(e);
-        event
       } else {
         newBuffer = buffer.concat(key);
         newEventsBuffer = eventsBuffer.concat(e);
