@@ -5,7 +5,6 @@ var difference = require('lodash/difference');
 var isEqual = require('lodash/isEqual');
 var isFunction = require('lodash/isFunction');
 
-
 module.exports = React.createClass({
   propTypes: {
     keys: React.PropTypes.array,
@@ -18,6 +17,7 @@ module.exports = React.createClass({
 
     return {
       buffer: [],
+      eventsBuffer: [],
       maxLength: (props.keys && props.keys.length) || 0
     };
   },
@@ -39,10 +39,14 @@ module.exports = React.createClass({
     var simultaneous = props.simultaneous;
 
     var buffer = state.buffer || [];
+    var eventsBuffer = state.eventsBuffer || [];
+
     var maxLength = state.maxLength || 0;
 
     var key = (e && e.key && e.key.toLowerCase()) || null;
-    var newBuffer = buffer;
+
+    var newBuffer = [];
+    var newEventsBuffer = [];
 
     var isKeySetEmpty;
     var areKeysPressedTogether;
@@ -51,8 +55,10 @@ module.exports = React.createClass({
     if (key) {
       if (buffer.length >= maxLength) {
         newBuffer = buffer.slice(1).concat(key);
+        newEventsBuffer = eventsBuffer.slice(1).concat(e);
       } else {
         newBuffer = buffer.concat(key);
+        newEventsBuffer = eventsBuffer.concat(e);
       }
     }
 
@@ -63,13 +69,15 @@ module.exports = React.createClass({
     if (!isKeySetEmpty) {
       if ((areKeysPressedTogether || areKeysPressedSequently)
           && isFunction(onKeysCoincide)) {
-        onKeysCoincide(newBuffer);
+        onKeysCoincide(newBuffer, newEventsBuffer);
         this.setState({
-          buffer: []
+          buffer: [],
+          eventsBuffer: []
         });
       } else {
         this.setState({
-          buffer: newBuffer
+          buffer: newBuffer,
+          eventsBuffer: newEventsBuffer
         });
       }
     }

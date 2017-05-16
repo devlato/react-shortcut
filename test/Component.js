@@ -62,6 +62,10 @@ describe('<HotKey />', function() {
 
   it('Should handle keys sequently', function() {
     var onKeysCoincideMock = jest.fn();
+    var checkKeys = ['m', 'o', 'c', 'k']
+    var checkEvents = checkKeys.map(function (key) {
+      return new KeyboardEvent('keydown', {'key': key});
+    })
 
     return new Promise(function(resolve) {
       var onKeysCoincide = function() {
@@ -69,17 +73,14 @@ describe('<HotKey />', function() {
         resolve();
       };
       var created = createComponent({
-        keys: ['m', 'o', 'c', 'k'],
+        keys: checkKeys,
         onKeysCoincide: onKeysCoincide
       });
 
       var wrapper = created.wrapper;
       var page = created.page;
 
-      document.dispatchEvent(new KeyboardEvent('keydown', {'key': 'm'}));
-      document.dispatchEvent(new KeyboardEvent('keydown', {'key': 'o'}));
-      document.dispatchEvent(new KeyboardEvent('keydown', {'key': 'c'}));
-      document.dispatchEvent(new KeyboardEvent('keydown', {'key': 'k'}));
+      checkEvents.forEach(document.dispatchEvent.bind(document));
     }).then(function() {
       expect(onKeysCoincideMock).toHaveBeenCalled();
     });
@@ -96,7 +97,8 @@ describe('<HotKey />', function() {
 
     document.dispatchEvent(new KeyboardEvent('keydown'), {});
     expect(Component.prototype.setState).toHaveBeenCalledWith({
-      buffer: []
+      buffer: [],
+      eventsBuffer: []
     });
   });
 
@@ -116,6 +118,37 @@ describe('<HotKey />', function() {
       }, 500);
     }).then(function() {
       expect(Component.prototype.setState).toHaveBeenCalled();
+    });
+  });
+
+  it('Should pass keys and events buffers', function() {
+    var onKeysCoincideMock = jest.fn();
+    var checkKeys = ['m', 'o', 'c', 'k'];
+    var checkEvents = checkKeys.map(function (key) {
+      return new KeyboardEvent('keydown', {key: key});
+    })
+
+    return new Promise(function (resolve) {
+      var onKeysCoincide = function(keys, events) {
+        resolve({
+          keys: keys,
+          events: events
+        });
+      };
+
+      var created = createComponent({
+        keys: checkKeys,
+        onKeysCoincide: onKeysCoincide
+      });
+
+      var wrapper = created.wrapper;
+      var page = created.page;
+
+      checkEvents.forEach(document.dispatchEvent.bind(document))
+
+    }).then(function (data){
+      expect(data.keys).toEqual(checkKeys);
+      expect(data.events).toEqual(checkEvents);
     });
   });
 
