@@ -1,56 +1,50 @@
-var React = require('react');
+const React = require('react');
+const PropTypes = require('prop-types');
 
-var isEmpty = require('lodash/isEmpty');
-var difference = require('lodash/difference');
-var isEqual = require('lodash/isEqual');
-var isFunction = require('lodash/isFunction');
+const isEmpty = require('lodash/isEmpty');
+const difference = require('lodash/difference');
+const isEqual = require('lodash/isEqual');
+const isFunction = require('lodash/isFunction');
 
-module.exports = React.createClass({
-  propTypes: {
-    keys: React.PropTypes.array,
-    simultaneous: React.PropTypes.bool,
-    onKeysCoincide: React.PropTypes.func
-  },
-
-  getInitialState: function initialState() {
-    var props = this.props || {};
-
-    return {
+class HotKey extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
       buffer: [],
       eventsBuffer: [],
-      maxLength: (props.keys && props.keys.length) || 0
+      maxLength: (props.keys && props.keys.length) || 0,
     };
-  },
 
-  componentDidMount: function didMount() {
+    this.onKeyPress = this.onKeyPress.bind(this);
+  }
+
+  componentDidMount() {
     document.addEventListener('keydown', this.onKeyPress);
-  },
+  }
 
-  componentWillUnmount: function willUnmount() {
+  componentWillUnmount() {
     document.removeEventListener('keydown', this.onKeyPress);
-  },
+  }
 
-  onKeyPress: function keyPress(e) {
-    var props = this.props || {};
-    var state = this.state || {};
+  onKeyPress(e) {
+    const props = this.props;
+    const state = this.state;
 
-    var keys = props.keys;
-    var onKeysCoincide = props.onKeysCoincide;
-    var simultaneous = props.simultaneous;
+    const keys = props.keys;
+    const onKeysCoincide = props.onKeysCoincide;
+    const simultaneous = props.simultaneous;
 
-    var buffer = state.buffer || [];
-    var eventsBuffer = state.eventsBuffer || [];
+    const buffer = state.buffer || [];
+    const eventsBuffer = state.eventsBuffer || [];
 
-    var maxLength = state.maxLength || 0;
+    const maxLength = state.maxLength || 0;
 
-    var key = (e && e.key && e.key.toLowerCase()) || null;
+    const key = (e && e.key && e.key.toLowerCase()) || null;
 
-    var newBuffer = [];
-    var newEventsBuffer = [];
+    let newBuffer = [];
+    let newEventsBuffer = [];
 
-    var isKeySetEmpty;
-    var areKeysPressedTogether;
-    var areKeysPressedSequently;
+    const isKeySetEmpty = !maxLength || (maxLength === 0);
 
     if (key) {
       if (buffer.length >= maxLength) {
@@ -62,35 +56,40 @@ module.exports = React.createClass({
       }
     }
 
-    isKeySetEmpty = !maxLength || (maxLength === 0);
-    areKeysPressedTogether = simultaneous && isEmpty(difference(keys, newBuffer));
-    areKeysPressedSequently = !simultaneous && isEqual(keys, newBuffer);
+    const areKeysPressedTogether = simultaneous && isEmpty(difference(keys, newBuffer));
+    const areKeysPressedSequently = !simultaneous && isEqual(keys, newBuffer);
 
     if (!isKeySetEmpty) {
-      if ((areKeysPressedTogether || areKeysPressedSequently)
-          && isFunction(onKeysCoincide)) {
+      if ((areKeysPressedTogether || areKeysPressedSequently) && isFunction(onKeysCoincide)) {
         onKeysCoincide(newBuffer, newEventsBuffer);
         this.setState({
           buffer: [],
-          eventsBuffer: []
+          eventsBuffer: [],
         });
       } else {
         this.setState({
           buffer: newBuffer,
-          eventsBuffer: newEventsBuffer
+          eventsBuffer: newEventsBuffer,
         });
       }
     }
-  },
-
-  render: function renderComponent() {
-    return null;
-  },
-
-  getDefaultProps: function defaultProps() {
-    return {
-      keys: [],
-      simultaneous: false
-    };
   }
-});
+
+  render() {
+    return null;
+  }
+}
+
+HotKey.propTypes = {
+  keys: PropTypes.arrayOf(PropTypes.string),
+  simultaneous: PropTypes.bool,
+  onKeysCoincide: PropTypes.func,
+};
+
+HotKey.defaultProps = {
+  keys: [],
+  simultaneous: false,
+  onKeysCoincide: () => {},
+};
+
+module.exports = HotKey;

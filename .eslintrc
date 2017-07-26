@@ -1,7 +1,18 @@
 {
-  "extends": "airbnb-base/legacy",
-  "env": {
-    "browser": true,
-    "node": true
+  "extends": "airbnb",
+  "globals": {
+    "document": true,
+    "jest": true,
+    "it": true,
+    "expect": true,
+    "beforeEach": true,
+    "afterEach": true,
+    "KeyboardEvent": true,
+    "describe": true
+  },
+  "rules": {
+    "jsx-a11y/href-no-hash": "off",
+    "react/no-unused-prop-types": "off"
   }
+
 }
