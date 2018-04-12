@@ -24,10 +24,32 @@ module.exports = React.createClass({
 
   componentDidMount: function didMount() {
     document.addEventListener('keydown', this.onKeyPress);
+    document.addEventListener('keyup', this.onKeyRelease);
   },
 
   componentWillUnmount: function willUnmount() {
     document.removeEventListener('keydown', this.onKeyPress);
+    document.removeEventListener('keyup', this.onKeyRelease);
+  },
+  
+  
+
+  onKeyRelease: function keyRelease(e) {
+    var state = this.state || {};
+    var buffer = state.buffer || [];
+    var eventsBuffer = state.eventsBuffer || [];
+
+    var keyUp = (e && e.key && e.key.toLowerCase()) || null;
+
+    if (keyUp) {
+      buffer = buffer.filter(key => key !== keyUp);
+      eventsBuffer = eventsBuffer.filter(event => event.key !== keyUp);
+
+      this.setState({
+        "buffer": buffer,
+        "eventsBuffer": eventsBuffer
+      });
+    }
   },
 
   onKeyPress: function keyPress(e) {
