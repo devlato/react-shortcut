@@ -39,8 +39,6 @@ module.exports = React.createClass({
 
     var keyUp = (e && e.key && e.key.toLowerCase()) || null;
 
-
-
     if (keyUp) {
       buffer = buffer.filter(function filterBuffer(key) {
         var notEqual = (key !== keyUp);
