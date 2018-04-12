@@ -32,7 +32,7 @@ module.exports = React.createClass({
     document.removeEventListener('keyup', this.onKeyRelease);
   },
 
-  onKeyRelease: function keyRelease (e) {
+  onKeyRelease: function keyRelease(e) {
     var state = this.state || {};
     var buffer = state.buffer || [];
     var eventsBuffer = state.eventsBuffer || [];
@@ -40,12 +40,12 @@ module.exports = React.createClass({
     var keyUp = (e && e.key && e.key.toLowerCase()) || null;
 
     if (keyUp) {
-      buffer = buffer.filter(function(key) {return key !== keyUp});
-      eventsBuffer = eventsBuffer.filter(function(event) {event.key !== keyUp});
+      buffer = buffer.filter(function (key) { return key !== keyUp; });
+      eventsBuffer = eventsBuffer.filter(function (event) { event.key !== keyUp; });
 
       this.setState({
-        "buffer": buffer,
-        "eventsBuffer": eventsBuffer
+        buffer: buffer,
+        eventsBuffer: eventsBuffer
       });
     }
   },
