@@ -42,8 +42,8 @@ module.exports = React.createClass({
     var keyUp = (e && e.key && e.key.toLowerCase()) || null;
 
     if (keyUp) {
-      buffer = buffer.filter(key => key !== keyUp);
-      eventsBuffer = eventsBuffer.filter(event => event.key !== keyUp);
+      buffer = buffer.filter(function(key) {return key !== keyUp});
+      eventsBuffer = eventsBuffer.filter(function(event) {event.key !== keyUp});
 
       this.setState({
         "buffer": buffer,
