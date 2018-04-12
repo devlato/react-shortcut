@@ -31,10 +31,8 @@ module.exports = React.createClass({
     document.removeEventListener('keydown', this.onKeyPress);
     document.removeEventListener('keyup', this.onKeyRelease);
   },
-  
-  
 
-  onKeyRelease: function keyRelease(e) {
+  onKeyRelease: function keyRelease (e) {
     var state = this.state || {};
     var buffer = state.buffer || [];
     var eventsBuffer = state.eventsBuffer || [];
