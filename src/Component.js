@@ -40,8 +40,8 @@ module.exports = React.createClass({
     var keyUp = (e && e.key && e.key.toLowerCase()) || null;
 
     if (keyUp) {
-      buffer = buffer.filter(function (key) { return key !== keyUp; });
-      eventsBuffer = eventsBuffer.filter(function (event) { event.key !== keyUp; });
+      buffer = buffer.filter(function (key) { var notEqual = (key !== keyUp); return notEqual; });
+      eventsBuffer = eventsBuffer.filter(function (event) { var notEqual = (event.key !== keyUp) return notEqual; });
 
       this.setState({
         buffer: buffer,
