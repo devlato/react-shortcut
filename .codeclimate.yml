@@ -1,11 +1,30 @@
-engines:
-  eslint:
+version: '2'
+checks:
+  argument-count:
+    enabled: false
+  complex-logic:
+    enabled: false
+  file-lines:
     enabled: true
-    channel: 'eslint-3'
     config:
-      extensions:
-      - .js
-ratings:
-   paths:
-   - "src/**/*"
-   - "**.md"
+      threshold: 250
+  method-complexity:
+    enabled: true
+    config:
+      threshold: 5
+  method-count:
+    enabled: true
+    config:
+      threshold: 20
+  method-lines:
+    enabled: true
+    config:
+      threshold: 25
+exclude_patterns:
+  - 'build/'
+  - 'node_modules/'
+plugins:
+  eslint:
+    enabled: false
+  nodesecurity:
+    enabled: false

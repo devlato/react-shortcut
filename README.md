@@ -1,14 +1,12 @@
-# react-shortcut
+# ReactShortcut
 
-Easily add global hotkeys/shortcuts to your React app
+Convenient React component that detects if the given key combination is pressed, and triggers a callback
 
-
-[![Build Status](https://travis-ci.org/devlato/react-hotkeys.svg?branch=master)](https://travis-ci.org/devlato/react-hotkeys)
-[![Coverage Status](https://coveralls.io/repos/github/devlato/react-hotkeys/badge.svg?branch=master)](https://coveralls.io/github/devlato/react-hotkeys?branch=master)
-[![Code Climate](https://codeclimate.com/github/devlato/react-hotkeys/badges/gpa.svg)](https://codeclimate.com/github/devlato/react-hotkeys)
-[![Issue Count](https://codeclimate.com/github/devlato/react-hotkeys/badges/issue_count.svg)](https://codeclimate.com/github/devlato/react-hotkeys)
-[![npm version](https://badge.fury.io/js/react-shortcut.svg)](https://badge.fury.io/js/react-shortcut)
-
+[![View on npm](https://badge.fury.io/js/react-shortcut.svg)](https://badge.fury.io/js/react-shortcut)
+[![Build Status](https://travis-ci.org/devlato/react-shortcut.svg?branch=master)](https://travis-ci.org/devlato/react-shortcut)
+[![Coverage Status](https://coveralls.io/repos/github/devlato/react-shortcut/badge.svg?branch=master)](https://coveralls.io/github/devlato/react-shortcut?branch=master)
+[![Code Climate](https://codeclimate.com/github/devlato/react-shortcut/badges/gpa.svg)](https://codeclimate.com/github/devlato/react-shortcut)
+[![Issue Count](https://codeclimate.com/github/devlato/react-shortcut/badges/issue_count.svg)](https://codeclimate.com/github/devlato/react-shortcut)
 
 ## Installation
 
@@ -24,170 +22,142 @@ Or with Yarn:
 $ yarn add react-shortcut
 ```
 
+## Using the component
 
-## Usage
+Is very simple and straightforward! There are just a couple of props to pass in.
 
-The usage is very simple, there is just a couple of props to pass.
+### Code example
 
-```jsx
-const HotKey = require('react-shortcut');
+```typescript jsx
+import ReactShortcut from 'react-shortcut';
 
 // ...
-
-render() {
-  return (
-    <HotKey
-        keys={/* Array of hotkeys */}
-        simultaneous={/* Add this prop if keys should be pressed all together */}
-        onKeysCoincide={/* Callback when target key combination is pressed */}
-    />
-  );
-}
+// Somewhere in your component tree
+<ReactShortcut
+  keys={/* String or array of strings containing the keys to be pressed, in any supported format */}
+  onKeysPressed={/* Callback when target key combination is pressed */}
+/>;
 ```
 
-You can add `react-shortcut` anywhere in your component hierarchy, because it adds a global
-keyboard events listener and doesn't stops any event bubbling.
+### Props
 
-For example:
+All the props are required.
 
-```jsx
-const HotKey = require('react-shortcut');
+| Name            | Description                                                                                            | Type                            |
+| --------------- | ------------------------------------------------------------------------------------------------------ | ------------------------------- |
+| `keys`          | A string containing comma-separated key combinations or/and key sequences, or an array of such strings | A string or an array of strings |
+| `onKeysPressed` | A callback to be triggered when the user presses any of the specified key combinations                 | A function with no arguments    |
 
-const React = require('react');
-const Menu = require('menu/Menu');          // Just an example
-const MenuItem = require('menu/MenuItem');  // Just an example
+### Key combinations and Key sequences
 
+The component supports both **key combinations** and **key sequences**.
 
-export default class AnyYourComponent extends React.Component {
-  static propTypes = {
-    showOpenFileDialog: React.PropTypes.fn.isRequired
-  };
+#### Key combinations
 
+A **key combination** is a string of key names separated by a plus sign, that describes what keys the user has to press at the same time, to execute the callback specified using `onKeysPressed` prop.
 
-  render() {
-    const openFileKeys = ['ctrl', 'o'];
+Examples: `Command+Shift+Left`, `Ctrl+P`.
 
-    return (
-      <Menu>
-        <MenuItem
-            label="Open File"
-            onClick={this.onFileOpen}
-        />
-      </Menu>
-      <HotKey
-          keys={openFileKeys}
-          simultaneous
-          onKeysCoincide={this.onFileOpen}
-      />
-    );
-  }
+To react on the keys combination(s) press, use the following format:
 
-  onFileOpen(keys, events) {
-    const {showOpenFileDialog} = this.props;
+```typescript jsx
+import ReactShortcut from 'react-shortcut';
 
-    showOpenFileDialog();
-  }
-}
+// Pass in the shortcut keys
+<ReactShortcut
+    keys="command+k"
+    onKeysPressed={doSomethingOnShortcutPress}
+/>
+
+// ... or an array of shortcuts
+<ReactShortcut
+    keys={['command+k', 'command+m']}
+    onKeysPressed={doSomethingOnShortcutPress}
+/>
+
+// ... or a string of comma-separated shortcuts
+<ReactShortcut
+    keys="command+k,command+m"
+    onKeysPressed={doSomethingOnShortcutPress}
+/>
 ```
 
+#### Key sequences
 
-## Props
+A **key sequence** is a string of key names separated by a space character, that lists out the keys the user has to press one by one, to trigger the callback specified using `onKeysPressed` prop.
 
-* `keys` – Just array of string representing each button to be pressed;
-* `simultaneous` – Set this prop if user should press buttons all together;
-* `onKeysCoincide` – Callback function to be called when user pressed the target buttons.
+Examples: `Up Up Down Down Left Right Left Right B A Enter`, `k o n a m i`.
 
+To react on the keys sequence(s) press, use the following format:
 
-## Supported keys
+```typescript jsx
+import ReactShortcut from 'react-shortcut';
 
-All alphabetic letters and numbers could be passed as is, i.e. letter "a" is just "a".
+// Pass in the shortcut keys
+<ReactShortcut
+    keys="k o n a m i"
+    onKeysPressed={doSomethingOnShortcutPress}
+/>
 
-If you use `simultaneous` mode and you have the `Shift` button in your hotkey combination,
-please set the unmodified buttons.
+// ... or an array of shortcuts
+<ReactShortcut
+    keys={['k o n a m i', 'm a r i o b r o s enter']}
+    onKeysPressed={doSomethingOnShortcutPress}
+/>
 
-For example, to have a `Shift+!` hotkey, you should pass `keys={["shift", "1"]}`,
-because "Shift" and "1" pressed together produce "!".
-
-
-## Examples of react-shortcut usage
-
-* [react-easter](https://www.npmjs.com/package/react-easter) – Easily add Easter eggs to your React app
-
-
-## Test coverage
-
-Library has ~100% test coverage:
-
-```sh
-$ npm run test:coverage
-
-> react-shortcut@1.0.0 test:coverage ~/projects/react-shortcut
-> NODE_ENV=test jest --coverage --no-cache --config .jestrc
-
- PASS  test/Component.js
-  <HotKey />
-    ✓ Calls componentDidMount (16ms)
-    ✓ Should handle keys sequently (10ms)
-    ✓ Should not react to events without keys (5ms)
-    ✓ Should not react if empty keys passed (506ms)
-    ✓ Should pass keys and events buffers (5ms)
-    ✓ Should remove listener on unmount (6ms)
-
---------------|----------|----------|----------|----------|----------------|
-File          |  % Stmts | % Branch |  % Funcs |  % Lines |Uncovered Lines |
---------------|----------|----------|----------|----------|----------------|
-All files     |      100 |    83.33 |      100 |      100 |                |
- Component.js |      100 |    83.33 |      100 |      100 |... 35,41,42,66 |
---------------|----------|----------|----------|----------|----------------|
-Test Suites: 1 passed, 1 total
-Tests:       6 passed, 6 total
-Snapshots:   0 total
-Time:        2.628s
-Ran all test suites.
-
+// ... or a string of comma-separated shortcuts
+<ReactShortcut
+    keys="k o n a m i,m a r i o b r o s enter"
+    onKeysPressed={doSomethingOnShortcutPress}
+/>
 ```
 
+#### Mixed use
 
-## Code style
+Mixing both modes is possible –just follow the same key combination/key sequence convention:
 
-Library is 100% compatible with [airbnb-base](https://www.npmjs.com/package/eslint-config-airbnb-base) for ES5.
+```typescript jsx
+import ReactShortcut from 'react-shortcut';
 
+// Array of shortcuts
+<ReactShortcut
+    keys={['k o n a m i', 'shift+command+m']}
+    onKeysPressed={doSomethingOnShortcutPress}
+/>
 
-## Available commands
+// ... or a string of comma-separated shortcuts
+<ReactShortcut
+    keys="k o n a m i,shift+command+m"
+    onKeysPressed={doSomethingOnShortcutPress}
+/>
+```
 
-Library has the following commands available:
+## FAQ
 
-* Run the tests:
+### Does it support TypeScript?
 
-  ```
-  $ npm test
-  ```
+It does. Moreover, it's implemented in TypeScript.
 
-* Run the tests and display test coverage:
+### Do I have to use <ReactShortcut /> component only in the root level component?
 
-  ```
-  $ npm run test:coverage
-  ```
+Nope. The component adds a global keyboard event listener and doesn't prevent events from bubbling or capturing.
 
-* Run the linter:
+### What if my app needs to support multiple shortcuts?
 
-  ```
-  $ npm run lint
-  ```
+Just use the component as many times as you need, just make sure the shortcuts aren't repeated.
 
-## Build
+### Do I have to specify the shortcuts in lower case only?
 
-No building required, library is implemented with ES5 React syntax for better compatibility and shipped as is.
+No, the case doesn't matter.
 
+### Any open-source examples of using this library?
+
+There's an official™️ one called [react-easter](https://www.npmjs.com/package/react-easter), for adding easter eggs triggered by the keypress.
 
 ## License
 
-Library is shipped "as is" under MIT License.
-
+The library is shipped "as is" under MIT License.
 
 ## Contributing
 
-Feel free to contribute but don't forget to test everything properly.
-
-
-[![NPM](https://nodei.co/npm/react-shortcut.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/react-shortcut/)
+Feel free to contribute, but don't forget to write tests, mate/matess.

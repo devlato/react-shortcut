@@ -1,66 +1,84 @@
 {
   "name": "react-shortcut",
-  "version": "1.0.6",
-  "description": "Easily add global hotkeys to your React app",
-  "main": "src/Component.js",
+  "version": "2.0.0",
+  "description": "Convenient React component that detects if the given key combination is pressed, and triggers a callback",
+  "main": "dist/index.js",
+  "homepage": "https://github.com/devlato/react-shortcut",
+  "bugs": {
+    "url": "https://github.com/devlato/react-shortcut/issues"
+  },
   "scripts": {
-    "test": "NODE_ENV=test jest -u --no-cache --config .jestrc",
-    "test:coverage": "NODE_ENV=test jest --coverage --no-cache --config .jestrc",
-    "lint": "eslint --config .eslintrc --ext .js .",
-    "coveralls": "cat ./coverage/lcov.info | coveralls",
-    "codeclimate": "cat ./coverage/lcov.info | codeclimate-test-reporter",
-    "test:report": "npm run coveralls && npm run codeclimate",
-    "validate": "npm run lint && npm run test:coverage",
-    "prepush": "npm run validate"
+    "format": "prettier --write src .jest",
+    "lint": "eslint --ext .ts,.tsx,.js,.jsx,.json -c .eslintrc.js .",
+    "test": "cross-env NODE_ENV=test jest",
+    "test:ci": "cross-env NODE_ENV=test jest --coverage",
+    "build": "tsc -p tsconfig.json",
+    "pre-push": "npm run lint && npm run test:coverage"
+  },
+  "lint-staged": {
+    "src/**/*.{ts,tsx,js,jsx,json}": [
+      "eslint -c ./.eslintrc.js --fix",
+      "jest —-bail --color --findRelatedTests",
+      "git add"
+    ],
+    "./*.{ts,tsx,js,jsx,json}": ["eslint -c ./.eslintrc.js --fix", "jest —-bail --color --findRelatedTests", "git add"]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "npm run lint && npm run test"
+    }
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/devlato/react-hotkeys.git"
+    "url": "git+https://github.com/devlato/react-shortcut.git"
   },
-  "keywords": [
-    "react",
-    "hotkeys",
-    "hotkey",
-    "shortcut",
-    "keyboard",
-    "keydown",
-    "listener",
-    "keypress"
-  ],
-  "author": "devlato <npm@devlato.com> (http://devlato.com/)",
+  "keywords": ["react", "component", "library", "typescript", "hotkeys", "hotkey", "shortcut", "keyboard"],
+  "author": "devlato <npm@devlato.com> (https://devlato.com/)",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/devlato/react-hotkeys/issues"
-  },
-  "homepage": "https://github.com/devlato/react-hotkeys#readme",
-  "files": [
-    "package.json",
-    "README.md",
-    ".gitignore",
-    ".editorconfig",
-    "src"
-  ],
+  "files": ["package.json", "README.md", "LICENSE", "dist"],
   "devDependencies": {
-    "chai": "^3.5.0",
-    "codeclimate-test-reporter": "0.4.0",
-    "coveralls": "2.11.15",
-    "enzyme": "^2.7.1",
-    "eslint": "3.14.1",
-    "eslint-config-airbnb-base": "11.0.1",
-    "eslint-plugin-import": "2.2.0",
-    "husky": "0.13.1",
-    "jest": "^19.0.2",
-    "react-addons-test-utils": "^15.4.2",
-    "sinon": "^1.17.7"
+    "@rollup/plugin-typescript": "^4.0.0",
+    "@types/enzyme": "^3.10.4",
+    "@types/jest": "^24.0.23",
+    "@types/mousetrap": "^1.6.3",
+    "@types/node": "^12.12.17",
+    "@types/prettier": "^1.19.1",
+    "@types/react": "^16.9.16",
+    "@types/react-dom": "^16.9.4",
+    "@typescript-eslint/eslint-plugin": "^2.12.0",
+    "@typescript-eslint/parser": "^2.12.0",
+    "coveralls": "^3.0.11",
+    "cross-env": "^7.0.2",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
+    "enzyme-to-json": "^3.4.4",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.1",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-react": "^7.19.0",
+    "husky": "^4.2.3",
+    "jest": "^25.2.3",
+    "lint-staged": "^10.0.9",
+    "prettier": "^2.0.2",
+    "react": "*",
+    "react-dom": "*",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.2.0",
+    "ts-jest": "^25.2.1",
+    "ts-loader": "^6.2.2",
+    "ts-node": "^8.8.1",
+    "typescript": "^3.8.3"
   },
-  "dependencies": {
-    "bluebird": "3.4.7",
-    "lodash": "^4.17.4",
-    "react": "^15.4.2",
-    "react-dom": "^15.4.2"
+  "peerDependencies": {
+    "react": "*",
+    "react-dom": "*"
   },
   "engines": {
-    "node": ">= 4",
-    "npm": ">= 2"
+    "node": ">= 8",
+    "npm": ">= 4"
+  },
+  "dependencies": {
+    "mousetrap": "^1.6.5"
   }
 }
