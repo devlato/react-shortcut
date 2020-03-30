@@ -27,4 +27,4 @@ jobs:
           echo "Pull Request Number - ${{ steps.cpr.outputs.pr_number }}"
       - name: Done
         run: echo Done
-        if: succeeded() || failed()
+        if: success() || failure()
