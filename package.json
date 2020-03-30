@@ -20,8 +20,8 @@
     "build:code": "cross-env NODE_ENV=production rollup -c rollup.config.js",
     "build": "npm run clean:build && npm run build:code",
     "storybook": "cross-env NODE_ENV=development start-storybook -p 6006 -c .storybook",
-    "storybook:run": "cross-env NODE_ENV=production build-storybook -c .storybook -o docs",
-    "storybook:build": "npm run clean:storybook && npm run storybook:run",
+    "storybook:compile": "cross-env NODE_ENV=production build-storybook -c .storybook -o docs",
+    "storybook:build": "npm run clean:storybook && npm run storybook:compile",
     "pre-push": "npm run lint && npm run test:coverage",
     "prepublish": "npm run clean && npm run build"
   },
