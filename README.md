@@ -3,7 +3,8 @@
 Convenient React component that detects if the given key combination is pressed, and triggers a callback
 
 [![View on npm](https://badge.fury.io/js/react-shortcut.svg)](https://badge.fury.io/js/react-shortcut)
-[![Build Status](https://travis-ci.org/devlato/react-shortcut.svg?branch=master)](https://travis-ci.org/devlato/react-shortcut)
+[![Master Build Status](https://github.com/devlato/react-shortcut/workflows/CI/badge.svg)](https://github.com/devlato/react-shortcut/actions?query=workflow%3ARelease)
+[![Release CI Status](https://github.com/devlato/react-shortcut/workflows/Publish/badge.svg)](https://github.com/devlato/react-shortcut/actions?query=workflow%3APublish)
 [![Maintainability](https://api.codeclimate.com/v1/badges/f426b7cb20cd324588ad/maintainability)](https://codeclimate.com/github/devlato/react-shortcut/maintainability)
 [[![Test Coverage](https://api.codeclimate.com/v1/badges/f426b7cb20cd324588ad/test_coverage)](https://codeclimate.com/github/devlato/react-shortcut/test_coverage)
 
