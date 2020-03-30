@@ -1,4 +1,4 @@
-import * as mousetrap from 'mousetrap';
+import 'mousetrap';
 import * as React from 'react';
 import { normalizeShortcuts, Shortcuts } from './utils';
 
@@ -29,11 +29,11 @@ export default class ReactHotKey extends React.Component<ReactHotKeyProps, React
   }
 
   componentDidMount() {
-    mousetrap.bind(this.state.keys, this.onKeysPressed);
+    Mousetrap.bind(this.state.keys, this.onKeysPressed);
   }
 
   componentWillUnmount() {
-    mousetrap.unbind(this.state.keys);
+    Mousetrap.unbind(this.state.keys);
   }
 
   render() {

@@ -1,0 +1,24 @@
+name: Completion
+
+on:
+  check_suite:
+    types: [completed]
+  pull_request_review:
+    types:
+      - submitted
+  status: {}
+
+jobs:
+  maybe-merge:
+    name: Merge
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.0.0
+      - name: Automerge
+        uses: pascalgn/automerge-action@v0.8.0
+        env:
+          MERGE_RETRIES: 10
+          MERGE_LABELS: 'Ready to merge,!Do not merge'
+          UPDATE_LABELS: 'Ready to merge'
+          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
