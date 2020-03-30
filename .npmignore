@@ -1,5 +1,8 @@
 .idea/
 .jest/
+.github/
+.storybook/
+docs/
 coverage/
 node_modules/
 src/
@@ -16,3 +19,5 @@ prettier.config.js
 rollup.config.js
 tsconfig.json
 tsconfig.tsbuildinfo
+CODEOWNERS
+**/.DS_Store

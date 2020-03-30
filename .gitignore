@@ -1,6 +1,8 @@
 .idea/
 dist/
+docs/
 coverage/
 node_modules/
 *.log
 tsconfig.tsbuildinfo
+**/.DS_Store

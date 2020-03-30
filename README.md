@@ -4,9 +4,8 @@ Convenient React component that detects if the given key combination is pressed,
 
 [![View on npm](https://badge.fury.io/js/react-shortcut.svg)](https://badge.fury.io/js/react-shortcut)
 [![Build Status](https://travis-ci.org/devlato/react-shortcut.svg?branch=master)](https://travis-ci.org/devlato/react-shortcut)
-[![Coverage Status](https://coveralls.io/repos/github/devlato/react-shortcut/badge.svg?branch=master)](https://coveralls.io/github/devlato/react-shortcut?branch=master)
-[![Code Climate](https://codeclimate.com/github/devlato/react-shortcut/badges/gpa.svg)](https://codeclimate.com/github/devlato/react-shortcut)
-[![Issue Count](https://codeclimate.com/github/devlato/react-shortcut/badges/issue_count.svg)](https://codeclimate.com/github/devlato/react-shortcut)
+[![Maintainability](https://api.codeclimate.com/v1/badges/f426b7cb20cd324588ad/maintainability)](https://codeclimate.com/github/devlato/react-shortcut/maintainability)
+[[![Test Coverage](https://api.codeclimate.com/v1/badges/f426b7cb20cd324588ad/test_coverage)](https://codeclimate.com/github/devlato/react-shortcut/test_coverage)
 
 ## Installation
 

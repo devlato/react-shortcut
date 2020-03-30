@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "composite": false,
-    "module": "commonjs",
-    "target": "es2015",
+    "module": "esnext",
+    "target": "es6",
     "sourceMap": true,
     "incremental": true,
     "newLine": "LF",
@@ -11,7 +11,9 @@
     "noImplicitThis": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "declaration": false,
+    "outDir": "dist",
+    "declaration": true,
+    "declarationDir": "dist",
     "preserveConstEnums": false,
     "pretty": true,
     "removeComments": true,
@@ -24,7 +26,7 @@
     "baseUrl": "./src",
     "allowJs": false,
     "allowSyntheticDefaultImports": false,
-    "esModuleInterop": false,
+    "esModuleInterop": true,
     "noImplicitUseStrict": false,
     "lib": ["es5", "es6", "es7", "esnext", "dom"],
     "strictNullChecks": true,
@@ -38,8 +40,9 @@
     "noErrorTruncation": true,
     "disableSizeLimit": true,
     "resolveJsonModule": true,
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "tsBuildInfoFile": "dist/tsbuildinfo"
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "src/tests", "src/stories"]
 }
