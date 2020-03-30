@@ -43,10 +43,10 @@ jobs:
         with:
           coverageCommand: npm run test:ci
       - name: Upload coverage
-          uses: actions/upload-artifact@v1
-          with:
-            name: test_coverage
-            path: coverage
+        uses: actions/upload-artifact@v1
+        with:
+          name: test_coverage
+          path: coverage
   build_code:
     name: Build code
     runs-on: ubuntu-latest
