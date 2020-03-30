@@ -6,7 +6,8 @@ Convenient React component that detects if the given key combination is pressed,
 [![Master Build Status](https://github.com/devlato/react-shortcut/workflows/CI/badge.svg)](https://github.com/devlato/react-shortcut/actions?query=workflow%3ARelease)
 [![Release CI Status](https://github.com/devlato/react-shortcut/workflows/Publish/badge.svg)](https://github.com/devlato/react-shortcut/actions?query=workflow%3APublish)
 [![Maintainability](https://api.codeclimate.com/v1/badges/f426b7cb20cd324588ad/maintainability)](https://codeclimate.com/github/devlato/react-shortcut/maintainability)
-[[![Test Coverage](https://api.codeclimate.com/v1/badges/f426b7cb20cd324588ad/test_coverage)](https://codeclimate.com/github/devlato/react-shortcut/test_coverage)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/f426b7cb20cd324588ad/test_coverage)](https://codeclimate.com/github/devlato/react-shortcut/test_coverage)
+[![Demo](http://inch-ci.org/github/devlato/react-shortcut.svg?branch=master)](https://inch-ci.org/github/devlato/react-shortcut)
 
 ## Installation
 
@@ -158,6 +159,6 @@ There's an official™️ one called [react-easter](https://www.npmjs.com/packag
 
 The library is shipped "as is" under MIT License.
 
-## Contributing
+## Contributing [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/devlato/react-shortcut/issues)
 
 Feel free to contribute, but don't forget to write tests, mate/matess.
