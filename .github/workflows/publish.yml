@@ -1,4 +1,4 @@
-name: Release
+name: Publish
 
 on:
   push:
@@ -45,11 +45,11 @@ jobs:
     - name: Coverage
       runs-on: ubuntu-latest
       steps:
-    - uses: paambaati/codeclimate-action@v2.2.4
-      env:
-        CC_TEST_REPORTER_ID: '{{ secrets.CC_TEST_REPORTER_ID }}'
-      with:
-        coverageCommand: npm run test:ci
+        - uses: paambaati/codeclimate-action@v2.2.4
+          env:
+            CC_TEST_REPORTER_ID: '{{ secrets.CC_TEST_REPORTER_ID }}'
+          with:
+            coverageCommand: npm run test:ci
   build_storybook:
     name: Storybook Build
     runs-on: ubuntu-latest
