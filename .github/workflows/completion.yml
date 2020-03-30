@@ -1,11 +1,22 @@
 name: Completion
 
 on:
-  check_suite:
-    types: [completed]
+  pull_request:
+    types:
+      - labeled
+      - unlabeled
+      - synchronize
+      - opened
+      - edited
+      - ready_for_review
+      - reopened
+      - unlocked
   pull_request_review:
     types:
       - submitted
+  check_suite:
+    types:
+      - completed
   status: {}
 
 jobs:
@@ -19,6 +30,7 @@ jobs:
         uses: pascalgn/automerge-action@v0.8.0
         env:
           MERGE_RETRIES: 10
+          MERGE_RETRY_SLEEP: 30000
           MERGE_LABELS: 'Ready to merge,!Do not merge'
           UPDATE_LABELS: 'Ready to merge'
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
