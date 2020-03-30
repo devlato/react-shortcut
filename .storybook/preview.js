@@ -3,8 +3,13 @@ import { withKnobs } from '@storybook/addon-knobs';
 
 addDecorator(withKnobs);
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 addParameters({
   options: {
+    isFullscreen: isProduction,
+    enableShortcuts: false,
+    isToolshown: !isProduction,
     name: '<ReactHotKey />',
     theme: {
       brandName: '<ReactHotKey />',
