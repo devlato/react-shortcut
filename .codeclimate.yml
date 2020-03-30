@@ -21,7 +21,11 @@ checks:
     config:
       threshold: 25
 exclude_patterns:
-  - 'build/'
+  - 'dist/'
+  - 'docs/'
+  - 'storybook/'
+  - 'src/tests'
+  - 'src/stories'
   - 'node_modules/'
 plugins:
   eslint:
