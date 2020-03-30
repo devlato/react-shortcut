@@ -8,7 +8,7 @@ on:
       - gh-pages
 
 jobs:
-  create-pull-request:
+  create_pull_request:
     name: Create
     runs-on: ubuntu-latest
     steps:

@@ -9,7 +9,7 @@ on:
   status: {}
 
 jobs:
-  maybe-merge:
+  maybe_merge:
     name: Merge
     runs-on: ubuntu-latest
     steps:
