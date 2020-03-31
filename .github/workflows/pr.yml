@@ -46,7 +46,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2.0.0
-      - name: Sets PR body
-        uses: technote-space/pr-commit-body-action@v1.4.1
-        env:
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+      - name: Generate changelog
+        id: changelog
+        uses: metcalfc/changelog-generator@v0.2.3
+        with:
+          myToken: '${{ secrets.GITHUB_TOKEN }}'
+      uses: AsasInnab/pr-body-action@v1
+      with:
+        body: '${{ steps.changelog.outputs.changelog }}'
+        base-ref: 'master'
+        GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
