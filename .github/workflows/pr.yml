@@ -29,9 +29,6 @@ jobs:
           pr_assignee: devlato
           pr_label: '2.0.0'
           pr_milestone: '2.0.0'
-          pr_body: |
-            <!-- START pr-commits -->
-            <!-- END pr-commits -->
       - name: Check outputs
         run: |
           echo "Pull Request Number - ${{ env.PULL_REQUEST_NUMBER }}"
@@ -46,13 +43,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2.0.0
-      - name: Generate changelog
+      - name: Generate PR changelog
         id: changelog
         uses: metcalfc/changelog-generator@v0.2.3
         with:
           myToken: '${{ secrets.GITHUB_TOKEN }}'
-      uses: AsasInnab/pr-body-action@v1
-      with:
-        body: '${{ steps.changelog.outputs.changelog }}'
-        base-ref: 'master'
-        GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+      - name: Update PR body
+        uses: AsasInnab/pr-body-action@v1
+        with:
+          body: '${{ steps.changelog.outputs.changelog }}'
+          base-ref: 'master'
+          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
