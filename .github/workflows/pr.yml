@@ -5,6 +5,8 @@ on:
     branches-ignore:
       - master
       - gh-pages
+    tags-ignore:
+      - '*'
   pull_request:
     types:
       - opened
