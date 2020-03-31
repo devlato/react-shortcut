@@ -23,6 +23,7 @@ jobs:
         uses: repo-sync/pull-request@v2.0.1
         with:
           github_token: '${{ secrets.GITHUB_TOKEN }}'
+          source_branch: '${{ github.ref }}'
           pr_reviewer: devlato
           pr_assignee: devlato
           pr_label: '2.0.0'
