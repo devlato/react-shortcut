@@ -15,7 +15,7 @@ on:
 
 jobs:
   create_pull_request:
-    name: Create
+    name: Create or update a PR
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -42,7 +42,7 @@ jobs:
         run: echo Done
         if: success() || failure()
   update_pr_body:
-    name: Create
+    name: Update PR body
     needs: [create_pull_request]
     runs-on: ubuntu-latest
     steps:
