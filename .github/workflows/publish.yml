@@ -82,7 +82,7 @@ jobs:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
           GITHUB_PAT: '${{ secrets.GH_PAT }}'
   publish:
-    needs: [secrets, lint, test, docs]
+    needs: [secrets, lint, test, build_storybook]
     name: Publish to npm
     runs-on: ubuntu-latest
     steps:
@@ -95,3 +95,8 @@ jobs:
         env:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
           NPM_TOKEN: '${{ secrets.NPM_AUTH_TOKEN }}'
+  update_changelog:
+    needs: [publish]
+    name: Update changelog
+    runs-on: ubuntu-latest
+    steps:

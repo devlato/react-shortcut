@@ -36,21 +36,13 @@ jobs:
       - name: Done
         run: echo Done
         if: success() || failure()
-  update_pr_body:
-    name: Update PR body
-    needs: [create_pull_request]
+  changelog:
+    name: Chanegelog Generator
     runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
     steps:
       - name: Checkout
-        uses: actions/checkout@v2.0.0
-      - name: Generate PR changelog
-        id: changelog
-        uses: metcalfc/changelog-generator@v0.2.3
+        uses: actions/checkout@v2
+      - uses: homeday-de/github-action-changelog-generator@v1.0.0
         with:
-          myToken: '${{ secrets.GITHUB_TOKEN }}'
-      - name: Update PR body
-        uses: AsasInnab/pr-body-action@v1
-        with:
-          body: '${{ steps.changelog.outputs.changelog }}'
-          base-ref: 'master'
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+          token: '${{ secrets.GITHUB_TOKEN }}'
