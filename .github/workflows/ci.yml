@@ -96,7 +96,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Maybe approve the PR
-        uses: juliangruber/approve-pull-request-action@v1.0.1
+        uses: juliangruber/approve-pull-request-action@v1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           number: 1
