@@ -28,6 +28,10 @@ jobs:
           pr_assignee: devlato
           pr_label: '2.0.0'
           pr_milestone: '2.0.0'
+          pr_title: 'Merge ${{ github.ref }} into master'
+          pr_body: |
+            <!-- START pr-commits -->
+            <!-- END pr-commits -->
       - name: Sets PR body
         uses: technote-space/pr-commit-body-action@v1.4.1
         env:
