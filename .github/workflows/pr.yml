@@ -20,25 +20,16 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v1
-      - name: Generate changelog
-        id: changelog
-        uses: heinrichreimer/github-changelog-generator-action@v2.1.1
-        with:
-          token: '${{ secrets.GITHUB_TOKEN }}'
       - name: Create a PR
         id: cpr
         uses: repo-sync/pull-request@v2.0.1
         with:
           github_token: '${{ secrets.GITHUB_TOKEN }}'
-          source_branch: '${{ github.ref }}'
           pr_reviewer: devlato
           pr_assignee: devlato
           pr_label: '2.0.0'
           pr_milestone: '2.0.0'
-          pr_title: 'Merge ${{ github.ref }} into master'
           pr_body: |
-            ${{ steps.changelog.outputs.changelog }}
-
             <!-- START pr-commits -->
             <!-- END pr-commits -->
       - name: Check outputs
