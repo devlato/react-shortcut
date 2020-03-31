@@ -32,10 +32,6 @@ jobs:
           pr_body: |
             <!-- START pr-commits -->
             <!-- END pr-commits -->
-      - name: Sets PR body
-        uses: technote-space/pr-commit-body-action@v1.4.1
-        env:
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
       - name: Check outputs
         run: |
           echo "Pull Request Number - ${{ env.PULL_REQUEST_NUMBER }}"
@@ -43,3 +39,14 @@ jobs:
       - name: Done
         run: echo Done
         if: success() || failure()
+  update_pr_body:
+    name: Create
+    needs: [create_pull_request]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.0.0
+      - name: Sets PR body
+        uses: technote-space/pr-commit-body-action@v1.4.1
+        env:
+          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
