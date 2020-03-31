@@ -6,16 +6,6 @@ on:
       - '*'
 
 jobs:
-  secrets:
-    name: Secrets
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2.0.0
-      - name: Install dependencies
-        run: npm ci
-      - name: Scan for secrets
-        uses: max/secret-scan@1.0.0
   lint:
     name: Lint
     runs-on: ubuntu-latest
@@ -66,7 +56,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Publish
-        uses: npm publish
+        run: npm publish
         env:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
           NPM_TOKEN: '${{ secrets.NPM_AUTH_TOKEN }}'
