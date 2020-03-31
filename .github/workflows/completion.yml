@@ -32,5 +32,6 @@ jobs:
           MERGE_RETRIES: 10
           MERGE_RETRY_SLEEP: 30000
           MERGE_LABELS: 'Ready to merge,!Do not merge'
-          UPDATE_LABELS: 'Ready to merge'
+          MERGE_METHOD: 'rebase'
+          UPDATE_METHOD: 'rebase'
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
