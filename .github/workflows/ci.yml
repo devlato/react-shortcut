@@ -85,17 +85,3 @@ jobs:
         with:
           name: storybook
           path: docs
-  auto_approve:
-    name: Approve the PR
-    needs: [secrets, lint, test, build_code, build_storybook]
-    if: github.event_name == 'pull_request'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2.0.0
-      - name: Install dependencies
-        run: npm ci
-      - name: Maybe approve the PR
-        uses: hmarr/auto-approve-action@v2.0.0
-        with:
-          github-token: '${{ secrets.GITHUB_TOKEN }}'
