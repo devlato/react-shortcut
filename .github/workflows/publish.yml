@@ -66,14 +66,10 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Publish
-        uses: pascalgn/npm-publish-action@1.1.0
-        with:
-          tag_name: '%s'
-          tag_message: '%s'
-          commit_pattern: "^Release (\\S+)"
+        uses: npm publish
         env:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
-          NPM_AUTH_TOKEN: '${{ secrets.NPM_AUTH_TOKEN }}'
+          NPM_TOKEN: '${{ secrets.NPM_AUTH_TOKEN }}'
   docs:
     needs: build_storybook
     name: Docs
