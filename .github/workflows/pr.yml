@@ -18,6 +18,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2.0.0
+      - name: Fetch
+        run: git fetch
       - name: Create a PR
         id: cpr
         uses: repo-sync/pull-request@v2.0.1
