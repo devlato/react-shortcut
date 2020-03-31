@@ -20,11 +20,13 @@ jobs:
         uses: actions/checkout@v2.0.0
       - name: Create a PR
         id: cpr
-        uses: peter-evans/create-pull-request@v2.5.0
+        uses: repo-sync/pull-request@v2.0.1
         with:
-          token: '${{ secrets.GITHUB_TOKEN }}'
-          reviewers: devlato
-          assignees: devlato
+          github_token: '${{ secrets.GITHUB_TOKEN }}'
+          pr_reviewer: devlato
+          pr_assignee: devlato
+          pr_label: '2.0.0'
+          pr_milestone: '2.0.0'
       - name: Sets PR body
         uses: technote-space/pr-commit-body-action@v1.4.1
         env:
