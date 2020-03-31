@@ -50,11 +50,17 @@ jobs:
         run: npm ci
       - name: Run tests
         run: npm run test:ci
+      - name: Post coverage comment
+        uses: ziishaned/jest-reporter-action@v0.1.1
+        with:
+          github-token: '${{ secrets.GITHUB_TOKEN }}'
+          test-command: 'npm run test:ci'
       - name: Upload coverage
         uses: actions/upload-artifact@v1
         with:
           name: test_coverage
           path: coverage
+
   build_code:
     name: Build code
     runs-on: ubuntu-latest
