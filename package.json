@@ -1,6 +1,6 @@
 {
   "name": "react-shortcut",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Convenient React component that detects if the given key combination is pressed, and triggers a callback",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
