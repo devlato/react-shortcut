@@ -86,6 +86,7 @@ jobs:
   auto_approve:
     name: Approve the PR
     needs: [secrets, lint, test, build_code, build_storybook]
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - name: Maybe approve the PR
