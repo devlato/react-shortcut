@@ -83,3 +83,12 @@ jobs:
         with:
           name: storybook
           path: docs
+  auto_approve:
+    name: Approve the PR
+    needs: [secrets, lint, test, build_code, build_storybook]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Maybe approve the PR
+        uses: hmarr/auto-approve-action@v2.0.0
+        with:
+          github-token: '${{ secrets.GITHUB_TOKEN }}'
