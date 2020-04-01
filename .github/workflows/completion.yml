@@ -18,9 +18,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2.0.0
       - name: Automerge
-        uses: devmasx/merge-branch@v1.1.0
-        env:
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+        uses: buildsville/simple-merge@v1
         with:
-          label_name: 'Ready to merge'
-          target_branch: 'master'
+          token: '${{ secrets.GITHUB_TOKEN }}'
+          method: rebase
+          labels: ['Ready to merge']
+          title: 'Merged ${{ github.ref }} into master'
