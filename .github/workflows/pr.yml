@@ -32,7 +32,10 @@ jobs:
           pr_label: '2.0.0'
           pr_milestone: '2.0.0'
       - name: Generate changelog
-        uses: homeday-de/github-action-changelog-generator@v1.0.0
-        if: github.event_name == 'pull_request'
+        run: 'echo "::set-env name=pr_body::$(git log --oneline master..${{ github.ref }})"'
         with:
           token: '${{ secrets.GITHUB_TOKEN }}'
+      - name: update-pull-request
+        uses: kt3k/update-pr-description@v1.0.0
+        with:
+          github_token: '${{ secrets.GITHUB_TOKEN }}'
