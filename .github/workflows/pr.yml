@@ -32,8 +32,10 @@ jobs:
           pr_label: '2.0.0'
           pr_milestone: '2.0.0'
       - name: Generate changelog
-        run: 'echo "::set-env name=pr_body::$(git log --oneline master..${{ github.ref }})"'
-      - name: update-pull-request
+        run: |
+          echo "::set-env name=pr_body::$(git log --oneline master..${{ github.ref }})"
+          echo "PR:\n${pr_body}"
+      - name: Update pull request
         uses: kt3k/update-pr-description@v1.0.0
         with:
           github_token: '${{ secrets.GITHUB_TOKEN }}'
