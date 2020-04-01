@@ -26,12 +26,8 @@
     "prepublish": "npm run clean && npm run build"
   },
   "lint-staged": {
-    "src/**/*.{ts,tsx,js,jsx,json}": [
-      "eslint -c ./.eslintrc.js --fix",
-      "jest —-bail --color --findRelatedTests",
-      "git add"
-    ],
-    "./*.{ts,tsx,js,jsx,json}": ["eslint -c ./.eslintrc.js --fix", "jest —-bail --color --findRelatedTests", "git add"]
+    "src/**/*.{ts,tsx,js,jsx,json}": ["eslint -c ./.eslintrc.js --fix", "jest —-bail --color --findRelatedTests"],
+    "./*.{ts,tsx,js,jsx,json}": ["eslint -c ./.eslintrc.js --fix", "jest —-bail --color --findRelatedTests"]
   },
   "husky": {
     "hooks": {
