@@ -4,7 +4,15 @@ on:
   pull_request:
     types:
       - labeled
+      - ready_for_review
+      - review_request_removed
+      - review_requested
+      - synchronize
       - unlabeled
+  pull_request_review:
+    types:
+      - dismissed
+      - submitted
   check_suite:
     types:
       - completed
@@ -18,9 +26,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2.0.0
       - name: Automerge
-        uses: buildsville/simple-merge@v1
+        uses: squalrus/merge-bot@v0.4.1
         with:
-          token: '${{ secrets.GITHUB_TOKEN }}'
+          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+          reviewers: true
+          labels: 'Ready to merge'
+          blocking-labels: 'Do not merge'
+          checks: true
           method: rebase
-          labels: ['Ready to merge']
-          title: 'Merged ${{ github.ref }} into master'
