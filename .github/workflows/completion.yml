@@ -3,6 +3,10 @@ name: Completion
 on:
   pull_request:
     types:
+      - opened
+      - edited
+      - reopened
+      - unlocked
       - labeled
       - ready_for_review
       - review_request_removed
