@@ -8,7 +8,7 @@ Convenient React component that detects if the given key combination is pressed,
 [![Maintainability](https://api.codeclimate.com/v1/badges/f426b7cb20cd324588ad/maintainability)](https://codeclimate.com/github/devlato/react-shortcut/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/f426b7cb20cd324588ad/test_coverage)](https://codeclimate.com/github/devlato/react-shortcut/test_coverage)
 [![Demo](https://img.shields.io/badge/Live%20Demo-Open-yellow)](https://devlato.github.io/react-shortcut/)
-[![Bundle size](https://img.shields.io/bundlephobia/minzip/react-shortcut?label=gzip%20size)](https://npmjs.org/package/react-shortcut)
+[![Bundle size](https://raw.githubusercontent.com/devlato/react-shortcut/master/.github/size-badge.svg)](https://bundlephobia.com/result?p=react-shortcut)
 [![Downloads](https://img.shields.io/npm/dm/react-shortcut)](https://npmjs.org/package/react-shortcut)
 [![MIT License](https://img.shields.io/npm/l/react-shortcut)](https://npmjs.org/package/react-shortcut)
 [![Issues](https://img.shields.io/github/issues/devlato/react-shortcut)](https://github.com/devlato/react-shortcut/issues)
