@@ -3,20 +3,21 @@ name: Completion
 on:
   pull_request:
     types:
+      - labeled
+      - unlabeled
+      - synchronize
       - opened
       - edited
+      - ready_for_review
       - reopened
       - unlocked
-      - labeled
-      - ready_for_review
-      - review_request_removed
-      - review_requested
-      - synchronize
-      - unlabeled
   pull_request_review:
     types:
-      - dismissed
       - submitted
+  check_suite:
+    types:
+      - completed
+  status: {}
 
 jobs:
   maybe_merge:
@@ -25,12 +26,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2.0.0
-      - name: Automerge
-        uses: squalrus/merge-bot@v0.4.1
-        with:
+      - name: automerge
+        uses: 'pascalgn/automerge-action@135f0bdb927d9807b5446f7ca9ecc2c51de03c4a'
+        env:
           GITHUB_TOKEN: '${{ secrets.GH_PAT }}'
-          reviewers: true
-          labels: 'Ready to merge'
-          blocking-labels: 'Do not merge'
-          checks: true
-          method: rebase
+          MERGE_LABELS: Ready to merge
+          MERGE_METHOD: rebase
+          MERGE_COMMIT_MESSAGE: 'Merge ${{ github.ref }} into master'
+          MERGE_RETRIES: 10
+          MERGE_RETRY_SLEEP: 30000
