@@ -90,6 +90,6 @@ jobs:
       - name: Maybe generate tag
         uses: Klemensas/action-autotag@1.2.3
         with:
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+          GITHUB_TOKEN: '${{ secrets.GH_PAT }}'
           tag_prefix: ''
           tag_suffix: ''
