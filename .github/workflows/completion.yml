@@ -32,7 +32,7 @@ jobs:
       - name: Automerge
         uses: squalrus/merge-bot@v0.4.1
         with:
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+          GITHUB_TOKEN: '${{ secrets.GH_PAT }}'
           reviewers: true
           labels: 'Ready to merge'
           blocking-labels: 'Do not merge'

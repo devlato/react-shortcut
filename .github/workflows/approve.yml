@@ -1,0 +1,19 @@
+name: Maybe approve
+
+on:
+  check_suite:
+    types:
+      - completed
+  status: {}
+
+jobs:
+  maybe_approve:
+    name: Auto-approve
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.0.0
+      - name: Auto-approve
+        uses: hmarr/auto-approve-action@v2.0.0
+        with:
+          github-token: '${{ secrets.GH_PAT }}'
