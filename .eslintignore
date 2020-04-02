@@ -8,3 +8,4 @@ node_modules/
 tsconfig.tsbuildinfo
 CODEOWNERS
 **/.DS_Store
+.npmrc

@@ -6,3 +6,4 @@ node_modules/
 *.log
 tsconfig.tsbuildinfo
 **/.DS_Store
+.npmrc

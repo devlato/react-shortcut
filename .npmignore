@@ -21,3 +21,4 @@ tsconfig.json
 tsconfig.tsbuildinfo
 CODEOWNERS
 **/.DS_Store
+.npmrc
