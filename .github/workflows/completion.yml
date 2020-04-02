@@ -17,10 +17,6 @@ on:
     types:
       - dismissed
       - submitted
-  check_suite:
-    types:
-      - completed
-  status: {}
 
 jobs:
   maybe_merge:
